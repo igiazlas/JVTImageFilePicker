@@ -56,7 +56,7 @@
     CGFloat btnCancelHeight = 50;
     CGRect btnCancelFrame = CGRectMake(btnPaddingFromLeft, (backgroundViewHeight / 2) - (btnCancelHeight / 2), btnWidth, btnCancelHeight);
     btnCancel.frame = btnCancelFrame;
-    [btnCancel addTarget:self action:@selector(closeSelf) forControlEvents:UIControlEventTouchUpInside];
+    [btnCancel addTarget:self action:@selector(didTapOnScreen) forControlEvents:UIControlEventTouchUpInside];
     [self.backgroundBlackTransparentView addSubview:btnCancel];
     
     UIButton *btnSend = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -119,15 +119,16 @@
 }
 
 - (void)didTapOnScreen {
-    [self closeSelf];
+    [self closeSelf:nil];
 }
 
 - (void)pressSend {
-    [self.delegate didPressSendOnImage:self.image];
-    [self closeSelf];
+    [self closeSelf:self.image];
+    //    [self.delegate didPressSendOnImage:self.image];
+    
 }
 
-- (void)closeSelf {
+- (void)closeSelf:(UIImage *)pickedImage {
     [self.backgroundBlackTransparentView removeFromSuperview];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     @weakify(self);
@@ -136,6 +137,9 @@
                                  @strongify(self);
                                  if ([self.delegate respondsToSelector:@selector(didDismissImagePreview)]) {
                                      [self.delegate didDismissImagePreview];
+                                     if (pickedImage != nil) {
+                                         [self.delegate didPressSendOnImage:pickedImage];
+                                     }
                                  }
                              }];
 }
