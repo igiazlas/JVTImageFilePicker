@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name              = 'ImageFilesPicker'
-s.version           = '0.2.1'
+s.version           = '0.2.2'
 s.summary           = 'ImageFilesPicker'
 s.homepage          = 'https://github.com/igiazlas/JVTImageFilePicker'
 s.ios.deployment_target = '8.0'
